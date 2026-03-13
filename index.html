@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beda Alam Absensi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script>tailwind.config = { darkMode: 'class' }</script>
+</head>
+<body class="bg-[#D6E9FF] min-h-screen p-6 md:p-12 font-['Plus_Jakarta_Sans'] transition-colors duration-500">
+
+    <div class="max-w-5xl mx-auto space-y-6">
+        
+        <header class="bg-white rounded-[45px] p-6 md:px-10 flex flex-col md:flex-row justify-between items-center shadow-[0_10px_30px_rgba(0,0,0,0.05)] transition-all">
+            <div class="flex items-center gap-5">
+                <div class="flex items-center justify-center transition-transform duration-300 hover:scale-110">
+                    <img src="assets/logo.png" alt="BA Logo" class="w-20 h-20 object-contain">
+                </div>
+                <div>
+                    <h1 class="text-[#2D5BFF] text-2xl md:text-3xl font-[800] tracking-tight leading-tight uppercase">BEDA ALAM ROLEPLAY</h1>
+                    <p class="text-[#1E2A78] text-sm font-bold tracking-[0.2em] uppercase">Attendence System</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-6 mt-4 md:mt-0">
+                <button id="darkModeToggle" class="p-2.5 flex items-center justify-center bg-gray-50 dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700 btn-animate">
+                    <span class="dark:hidden text-lg">🌙</span>
+                    <span class="hidden dark:block text-lg">☀️</span>
+                </button>
+                
+                <button onclick="accessAdminPanel()" class="bg-[#2D5BFF] text-white px-10 py-4 rounded-full font-bold shadow-blue-200 shadow-xl uppercase text-sm btn-animate">
+                    ADMIN PANEL
+                </button>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-white/60 backdrop-blur-sm rounded-2xl p-6 flex justify-between items-center border border-white/40 shadow-sm">
+                <span class="text-[#2D5BFF] font-bold text-xs uppercase">High Rank</span>
+                <span id="count-HIGH-RANK" class="font-extrabold text-[#1E2A78] text-xl">0</span>
+            </div>
+            <div class="bg-white/60 backdrop-blur-sm rounded-2xl p-6 flex justify-between items-center border border-white/40 shadow-sm">
+                <span class="text-[#2D5BFF] font-bold text-xs uppercase">Senior</span>
+                <span id="count-SENIOR" class="font-extrabold text-[#1E2A78] text-xl">0</span>
+            </div>
+            <div class="bg-white/60 backdrop-blur-sm rounded-2xl p-6 flex justify-between items-center border border-white/40 shadow-sm">
+                <span class="text-[#2D5BFF] font-bold text-xs uppercase">Junior</span>
+                <span id="count-JUNIOR" class="font-extrabold text-[#1E2A78] text-xl">0</span>
+            </div>
+            <div class="bg-white/60 backdrop-blur-sm rounded-2xl p-6 flex justify-between items-center border border-white/40 shadow-sm">
+                <span class="text-[#2D5BFF] font-bold text-xs uppercase">Intern</span>
+                <span id="count-INTERN" class="font-extrabold text-[#1E2A78] text-xl">0</span>
+            </div>
+        </div>
+
+        <div class="relative">
+            <input type="text" id="employeeSearch" placeholder="SEARCH EMPLOYEE" 
+                class="w-full bg-white/50 border border-white/80 rounded-2xl py-5 px-6 text-center italic font-bold text-[#2D5BFF] placeholder-[#2D5BFF]/40 focus:outline-none focus:bg-white transition-all shadow-sm uppercase tracking-widest">
+        </div>
+
+        <div id="employee-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-10"></div>
+    </div>
+
+    <script src="config.js"></script>
+    <script type="module" src="script.js"></script>
+    <script src="script.js"></script>
+    <script>
+        /**
+         * --- MARKING: ADMIN PASSWORD ---
+         * Ganti nilai di bawah ini untuk mengubah password Admin Panel
+         */
+        const ADMIN_PASSWORD = "1234"; 
+
+        // Fungsi Gateway Admin
+        function accessAdminPanel() {
+            const input = prompt("Masukkan Password Admin:");
+            
+            if (input === ADMIN_PASSWORD) {
+                window.location.href = "admin.html";
+            } else if (input !== null) {
+                alert("Password Salah! Akses Ditolak.");
+            }
+        }
+
+        // Logic Dark Mode
+        const toggle = document.getElementById('darkModeToggle');
+        if(localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+        toggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        });
+    </script>
+</body>
+</html>
