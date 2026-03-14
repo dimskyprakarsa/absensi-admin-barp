@@ -7,21 +7,19 @@ const GLOBAL_SETTINGS = {
         'INTERN': 5000
     },
     BONUS_CONFIG: {
-        THRESHOLD: 20, // Mulai dapat bonus di jam ke-20
-        MULTIPLIER: 5,  // Tiap kelipatan 5 jam
-        AMOUNT: 5000    // Nominal bonus
+        THRESHOLD: 20,
+        MULTIPLIER: 5,
+        AMOUNT: 5000
     },
-    ADMIN_PASSWORD: "admin123", // Password untuk Admin Panel
-    UPDATE_INTERVAL: 60000      // Refresh tampilan setiap 1 menit
+    ADMIN_PASSWORD: "admin123"
 };
 
-// Logika Gaji Global
 function calculateFinalSalary(rank, totalHours) {
     const baseAtTarget = GLOBAL_SETTINGS.SALARY_CONFIG[rank] || 5000;
     let currentSalary = Math.floor((totalHours / GLOBAL_SETTINGS.TARGET_HOURS) * baseAtTarget);
 
     if (totalHours >= GLOBAL_SETTINGS.BONUS_CONFIG.THRESHOLD) {
-        const extraHours = totalHours - 15; // Bonus dihitung dari kelebihan target 15 jam
+        const extraHours = totalHours - 15;
         const bonusCount = Math.floor(extraHours / GLOBAL_SETTINGS.BONUS_CONFIG.MULTIPLIER);
         currentSalary += (bonusCount * GLOBAL_SETTINGS.BONUS_CONFIG.AMOUNT);
     }
