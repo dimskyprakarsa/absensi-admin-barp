@@ -6,6 +6,7 @@
     <title>Admin Panel - Beda Alam</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <script>tailwind.config = { darkMode: 'class' }</script>
 </head>
 <body class="bg-[#D6E9FF] dark:bg-slate-900 min-h-screen p-6 md:p-12 font-['Plus_Jakarta_Sans'] transition-colors duration-500">
@@ -33,11 +34,11 @@
             <form id="hireForm" class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-3 items-center gap-4">
                     <label class="font-bold text-[#1E2A78] dark:text-slate-200">Employee Name</label>
-                    <input type="text" id="hireName" required placeholder="INPUT NAME..." class="md:col-span-2 bg-white dark:bg-slate-700 border border-blue-100 dark:border-slate-600 rounded-2xl py-4 px-6 font-bold text-[#2D5BFF] focus:ring-2 focus:ring-blue-400 outline-none shadow-sm">
+                    <input type="text" id="hireName" required placeholder="INPUT NAME..." class="md:col-span-2 bg-white dark:bg-slate-700 border border-blue-100 dark:border-slate-600 rounded-2xl py-4 px-6 font-bold text-[#2D5BFF] outline-none shadow-sm">
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 items-center gap-4">
                     <label class="font-bold text-[#1E2A78] dark:text-slate-200">Set Password</label>
-                    <input type="password" id="hirePass" required placeholder="SET PASSWORD..." class="md:col-span-2 bg-white dark:bg-slate-700 border border-blue-100 dark:border-slate-600 rounded-2xl py-4 px-6 font-bold text-[#2D5BFF] focus:ring-2 focus:ring-blue-400 outline-none shadow-sm">
+                    <input type="password" id="hirePass" required placeholder="SET PASSWORD..." class="md:col-span-2 bg-white dark:bg-slate-700 border border-blue-100 dark:border-slate-600 rounded-2xl py-4 px-6 font-bold text-[#2D5BFF] outline-none shadow-sm">
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 items-center gap-4">
                     <label class="font-bold text-[#1E2A78] dark:text-slate-200">Grade</label>
@@ -49,16 +50,21 @@
                     </select>
                 </div>
                 <div class="flex justify-end pt-4">
-                    <button type="submit" class="bg-[#2D5BFF] text-white px-14 py-4 rounded-full font-[900] shadow-blue-200 dark:shadow-none shadow-xl uppercase transition-all active:scale-95">Submit Data</button>
+                    <button type="submit" class="bg-[#2D5BFF] text-white px-14 py-4 rounded-full font-[900] shadow-xl uppercase active:scale-95 transition-all">Submit Data</button>
                 </div>
             </form>
         </section>
 
         <section class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border border-white dark:border-slate-700 rounded-[35px] p-8 shadow-sm">
-            <h2 class="text-[#2D5BFF] dark:text-blue-400 font-extrabold text-xl mb-8 border-b-2 border-blue-100 dark:border-slate-700 pb-2 inline-block uppercase">Employee Management</h2>
-            <div id="manage-list" class="space-y-4">
-                <p class="text-center text-blue-400 animate-pulse font-bold uppercase">Loading Data...</p>
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                <h2 class="text-[#2D5BFF] dark:text-blue-400 font-extrabold text-xl border-b-2 border-blue-100 dark:border-slate-700 pb-2 uppercase">Employee Management</h2>
+                <div class="flex gap-2">
+                    <button id="exportBtn" class="bg-emerald-500 text-white px-5 py-2 rounded-xl font-bold text-xs uppercase hover:bg-emerald-600 transition-all">Export to Sheets</button>
+                    <button id="resetAllBtn" class="bg-red-500 text-white px-5 py-2 rounded-xl font-bold text-xs uppercase hover:bg-red-600 transition-all text-white">Reset All Hours</button>
+                </div>
             </div>
+            <div id="manage-list" class="space-y-4">
+                </div>
         </section>
     </div>
 
@@ -66,68 +72,90 @@
     <script type="module">
         import { Storage } from './data/storage.js';
 
-        // DARK MODE LOGIC (Fixed)
+        // Dark Mode Logic
         const toggle = document.getElementById('darkModeToggle');
         if(localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
-        
-        toggle.addEventListener('click', () => {
+        toggle.onclick = () => {
             document.documentElement.classList.toggle('dark');
             localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-        });
+        };
 
-        // HIRE EMPLOYEE LOGIC
-        const hireForm = document.getElementById('hireForm');
-        hireForm.onsubmit = async (e) => {
+        // Hire Logic
+        document.getElementById('hireForm').onsubmit = async (e) => {
             e.preventDefault();
             const name = document.getElementById('hireName').value;
             const pass = document.getElementById('hirePass').value;
             const grade = document.getElementById('hireGrade').value;
-
-            try {
-                const employees = await Storage.getEmployees();
-                employees.push({
-                    id: Date.now(),
-                    name: name,
-                    rank: grade,
-                    password: pass,
-                    currentHours: 0
-                });
-                await Storage.saveEmployees(employees);
-                alert("EMPLOYEE ADDED SUCCESSFULLY!");
-                hireForm.reset();
-                window.location.reload();
-            } catch (err) {
-                alert("ERROR: " + err.message);
-            }
+            const emps = await Storage.getEmployees();
+            emps.push({ id: Date.now(), name, rank: grade, password: pass, currentHours: 0 });
+            await Storage.saveEmployees(emps);
+            alert("Success!"); location.reload();
         };
 
-        // RENDER MANAGEMENT LIST (Optional but helpful)
+        // Render Management List
         async function loadManagement() {
             const list = document.getElementById('manage-list');
             const emps = await Storage.getEmployees();
-            if(emps.length === 0) {
-                list.innerHTML = `<p class="text-center text-slate-400 font-bold uppercase">No Employee Found</p>`;
-                return;
-            }
             list.innerHTML = emps.map(emp => `
-                <div class="flex justify-between items-center bg-white dark:bg-slate-700 p-4 rounded-2xl border border-blue-50 dark:border-slate-600 shadow-sm">
-                    <div>
-                        <p class="font-black text-[#2D5BFF] dark:text-blue-400">${emp.name}</p>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase">${emp.rank}</p>
+                <div class="flex flex-col md:flex-row justify-between items-center bg-white dark:bg-slate-700 p-5 rounded-[25px] border border-blue-50 dark:border-slate-600 gap-4">
+                    <div class="flex-1">
+                        <p class="font-black text-[#1E2A78] dark:text-white uppercase">${emp.name}</p>
+                        <p class="text-[10px] font-bold text-blue-400 uppercase tracking-tighter">${emp.currentHours.toFixed(2)} Hours Accumlated</p>
                     </div>
-                    <button onclick="deleteEmp(${emp.id})" class="text-red-400 hover:text-red-600 font-bold text-xs">REMOVE</button>
+                    <div class="flex items-center gap-3 w-full md:w-auto">
+                        <select onchange="updateGrade(${emp.id}, this.value)" class="bg-slate-100 dark:bg-slate-800 text-[10px] font-bold p-2 rounded-lg outline-none text-[#2D5BFF]">
+                            <option value="HIGH RANK" ${emp.rank === 'HIGH RANK' ? 'selected' : ''}>HIGH RANK</option>
+                            <option value="SENIOR" ${emp.rank === 'SENIOR' ? 'selected' : ''}>SENIOR</option>
+                            <option value="JUNIOR" ${emp.rank === 'JUNIOR' ? 'selected' : ''}>JUNIOR</option>
+                            <option value="INTERN" ${emp.rank === 'INTERN' ? 'selected' : ''}>INTERN</option>
+                        </select>
+                        <button onclick="deleteEmp(${emp.id})" class="text-red-400 hover:text-red-600 font-bold text-[10px] uppercase ml-2">Remove</button>
+                    </div>
                 </div>
             `).join('');
         }
 
+        // Global Actions
+        window.updateGrade = async (id, newGrade) => {
+            const emps = await Storage.getEmployees();
+            const idx = emps.findIndex(e => e.id == id);
+            emps[idx].rank = newGrade;
+            await Storage.saveEmployees(emps);
+        };
+
         window.deleteEmp = async (id) => {
-            if(confirm("Delete this employee?")) {
+            if(confirm("Are you sure?")) {
                 const emps = await Storage.getEmployees();
-                const filtered = emps.filter(e => e.id != id);
-                await Storage.saveEmployees(filtered);
-                window.location.reload();
+                await Storage.saveEmployees(emps.filter(e => e.id != id));
+                location.reload();
             }
-        }
+        };
+
+        document.getElementById('resetAllBtn').onclick = async () => {
+            if(confirm("RESET ALL HOURS TO 0? This cannot be undone.")) {
+                const emps = await Storage.getEmployees();
+                const resetData = emps.map(e => ({ ...e, currentHours: 0 }));
+                await Storage.saveEmployees(resetData);
+                alert("All hours reset!"); location.reload();
+            }
+        };
+
+        // Export to CSV (Sheets Compatible)
+        document.getElementById('exportBtn').onclick = async () => {
+            const emps = await Storage.getEmployees();
+            let csv = "Name,Rank,Total Hours,Estimated Salary\n";
+            emps.forEach(e => {
+                const salary = calculateFinalSalary(e.rank, e.currentHours);
+                csv += `${e.name},${e.rank},${e.currentHours.toFixed(2)},${salary}\n`;
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.setAttribute('href', url);
+            a.setAttribute('download', `Duty_Log_${new Date().toLocaleDateString()}.csv`);
+            a.click();
+        };
 
         loadManagement();
     </script>
