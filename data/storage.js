@@ -4,7 +4,6 @@ import { getDatabase, ref, set, get, onValue } from "https://www.gstatic.com/fir
 const firebaseConfig = {
     apiKey: "AIzaSyBsA6xjYEM3z5U5jFPT-vHBPwsvAZeWahE",
     authDomain: "absensi-beda-alam-roleplay.firebaseapp.com",
-    // PENTING: Link database wajib ada di sini
     databaseURL: "https://absensi-beda-alam-roleplay-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "absensi-beda-alam-roleplay",
     storageBucket: "absensi-beda-alam-roleplay.firebasestorage.app",
