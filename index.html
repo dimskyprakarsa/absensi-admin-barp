@@ -51,14 +51,22 @@
 
     <script src="config.js"></script>
     <script type="module" src="script.js"></script>
+    
     <script>
         function accessAdmin() {
-            if(prompt("Admin Password:") === GLOBAL_SETTINGS.ADMIN_PASSWORD) {
-                window.location.href = "admin.html";
-            } else { alert("Access Denied"); }
+            // Pastikan GLOBAL_SETTINGS sudah dimuat dari config.js
+            if(typeof GLOBAL_SETTINGS !== 'undefined') {
+                if(prompt("Admin Password:") === GLOBAL_SETTINGS.ADMIN_PASSWORD) {
+                    window.location.href = "admin.html";
+                } else { alert("Access Denied"); }
+            } else {
+                alert("Config loading... please wait.");
+            }
         }
+
         const toggle = document.getElementById('darkModeToggle');
         if(localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+        
         toggle.addEventListener('click', () => {
             document.documentElement.classList.toggle('dark');
             localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
