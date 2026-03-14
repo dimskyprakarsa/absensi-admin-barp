@@ -6,43 +6,42 @@
     <title>Admin Panel - Beda Alam</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
     <script>tailwind.config = { darkMode: 'class' }</script>
 </head>
-<body class="bg-[#D6E9FF] min-h-screen p-6 md:p-12 font-['Plus_Jakarta_Sans'] transition-colors duration-500">
+<body class="bg-[#D6E9FF] dark:bg-slate-900 min-h-screen p-6 md:p-12 font-['Plus_Jakarta_Sans'] transition-colors duration-500">
 
     <div class="max-w-5xl mx-auto space-y-6">
-        <header class="bg-white rounded-[45px] p-6 md:px-10 flex flex-col md:flex-row justify-between items-center shadow-[0_10px_30px_rgba(0,0,0,0.05)]">
+        <header class="bg-white dark:bg-slate-800 rounded-[45px] p-6 md:px-10 flex flex-col md:flex-row justify-between items-center shadow-lg">
             <div class="flex items-center gap-5">
                 <a href="index.html"><img src="assets/logo.png" alt="BA Logo" class="w-20 h-20 object-contain"></a>
                 <div>
-                    <h1 class="text-[#2D5BFF] text-2xl md:text-3xl font-[800] uppercase">BEDA ALAM ROLEPLAY</h1>
-                    <p class="text-[#1E2A78] text-sm font-bold uppercase">Attendence System</p>
+                    <h1 class="text-[#2D5BFF] dark:text-blue-400 text-2xl font-[800] uppercase">ADMIN PANEL</h1>
+                    <p class="text-[#1E2A78] dark:text-slate-300 text-sm font-bold uppercase tracking-widest">Beda Alam Roleplay</p>
                 </div>
             </div>
-            <div class="flex items-center gap-6 mt-4 md:mt-0">
-                <button id="darkModeToggle" class="p-2.5 bg-gray-50 dark:bg-slate-800 rounded-xl border border-gray-200 dark:border-slate-700">
-                    <span class="dark:hidden text-lg">🌙</span>
-                    <span class="hidden dark:block text-lg">☀️</span>
+            <div class="flex items-center gap-4 mt-4 md:mt-0">
+                <button id="darkModeToggle" class="p-3 bg-gray-100 dark:bg-slate-700 rounded-2xl">
+                    <span class="dark:hidden">🌙</span>
+                    <span class="hidden dark:block">☀️</span>
                 </button>
-                <a href="index.html" class="bg-[#2D5BFF] text-white px-10 py-4 rounded-full font-bold shadow-xl text-sm">DASHBOARD</a>
+                <a href="index.html" class="bg-[#2D5BFF] text-white px-8 py-3 rounded-full font-bold shadow-lg text-sm">DASHBOARD</a>
             </div>
         </header>
 
-        <section class="bg-white/70 backdrop-blur-md border border-white rounded-[35px] p-10 shadow-sm">
-            <h2 class="text-[#2D5BFF] font-extrabold text-xl mb-8 border-b-2 border-[#2D5BFF] pb-2 inline-block uppercase">Hire Employee</h2>
+        <section class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border border-white dark:border-slate-700 rounded-[35px] p-8 shadow-sm">
+            <h2 class="text-[#2D5BFF] dark:text-blue-400 font-extrabold text-xl mb-8 border-b-2 border-blue-100 dark:border-slate-700 pb-2 inline-block uppercase tracking-wider">Hire Employee</h2>
             <form id="hireForm" class="space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 items-center gap-6">
-                    <label class="font-bold text-[#1E2A78] text-lg">Employee Name</label>
-                    <input type="text" id="hireName" required placeholder="INPUT NAME..." class="md:col-span-2 bg-white/50 border border-white/80 rounded-2xl py-4 px-6 font-bold text-[#2D5BFF] focus:outline-none focus:bg-white shadow-sm transition-all">
+                <div class="grid grid-cols-1 md:grid-cols-3 items-center gap-4">
+                    <label class="font-bold text-[#1E2A78] dark:text-slate-200">Employee Name</label>
+                    <input type="text" id="hireName" required placeholder="INPUT NAME..." class="md:col-span-2 bg-white dark:bg-slate-700 border border-blue-100 dark:border-slate-600 rounded-2xl py-4 px-6 font-bold text-[#2D5BFF] focus:ring-2 focus:ring-blue-400 outline-none shadow-sm">
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 items-center gap-6">
-                    <label class="font-bold text-[#1E2A78] text-lg">Set Password</label>
-                    <input type="password" id="hirePass" required placeholder="SET EMPLOYEE PASSWORD..." class="md:col-span-2 bg-white/50 border border-white/80 rounded-2xl py-4 px-6 font-bold text-[#2D5BFF] focus:outline-none focus:bg-white shadow-sm transition-all">
+                <div class="grid grid-cols-1 md:grid-cols-3 items-center gap-4">
+                    <label class="font-bold text-[#1E2A78] dark:text-slate-200">Set Password</label>
+                    <input type="password" id="hirePass" required placeholder="SET PASSWORD..." class="md:col-span-2 bg-white dark:bg-slate-700 border border-blue-100 dark:border-slate-600 rounded-2xl py-4 px-6 font-bold text-[#2D5BFF] focus:ring-2 focus:ring-blue-400 outline-none shadow-sm">
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 items-center gap-6">
-                    <label class="font-bold text-[#1E2A78] text-lg">Grade</label>
-                    <select id="hireGrade" class="md:col-span-1 bg-white/50 border border-white/80 rounded-2xl py-4 px-6 text-[#2D5BFF] font-[800] focus:outline-none focus:bg-white shadow-sm transition-all">
+                <div class="grid grid-cols-1 md:grid-cols-3 items-center gap-4">
+                    <label class="font-bold text-[#1E2A78] dark:text-slate-200">Grade</label>
+                    <select id="hireGrade" class="md:col-span-1 bg-white dark:bg-slate-700 border border-blue-100 dark:border-slate-600 rounded-2xl py-4 px-6 text-[#2D5BFF] font-[800] outline-none shadow-sm">
                         <option value="HIGH RANK">HIGH RANK</option>
                         <option value="SENIOR">SENIOR</option>
                         <option value="JUNIOR">JUNIOR</option>
@@ -50,97 +49,12 @@
                     </select>
                 </div>
                 <div class="flex justify-end pt-4">
-                    <button type="submit" class="bg-[#2D5BFF] text-white px-14 py-4 rounded-full font-[900] shadow-blue-200 shadow-xl uppercase btn-animate">SUBMIT DATA</button>
+                    <button type="submit" class="bg-[#2D5BFF] text-white px-14 py-4 rounded-full font-[900] shadow-blue-200 dark:shadow-none shadow-xl uppercase transition-all active:scale-95">Submit Data</button>
                 </div>
             </form>
         </section>
 
-        <section class="bg-white/70 backdrop-blur-md border border-white rounded-[35px] p-10 shadow-sm">
-            <h2 class="text-[#2D5BFF] font-extrabold text-xl mb-8 border-b-2 border-[#2D5BFF] pb-2 inline-block">EMPLOYEE MANAGEMENT</h2>
-            <div id="manage-list" class="space-y-4"></div>
-        </section>
-    </div>
-
-    <script src="config.js"></script>
-    <script type="module" src="script.js"></script>
-    <script>
-        const rankOrder = ['INTERN', 'JUNIOR', 'SENIOR', 'HIGH RANK'];
-
-        function renderManageList() {
-            const listContainer = document.getElementById('manage-list');
-            const employees = Storage.getEmployees();
-            listContainer.innerHTML = "";
-
-            employees.forEach(emp => {
-                const item = document.createElement('div');
-                item.className = "flex flex-col md:flex-row justify-between items-center bg-white/50 dark:bg-slate-800/50 p-6 rounded-2xl border border-white/80 dark:border-slate-700 shadow-sm gap-4";
-                item.innerHTML = `
-                    <div class="flex-1 text-center md:text-left">
-                        <p class="font-extrabold text-[#2D5BFF] dark:text-[#60A5FA] uppercase text-lg">${emp.name}</p>
-                        <p class="text-xs font-bold text-[#1E2A78] dark:text-slate-400 uppercase tracking-widest">${emp.rank} | PASS: ${emp.password}</p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="changeGrade(${emp.id}, 'down')" class="w-10 h-10 flex items-center justify-center bg-amber-100 text-amber-600 rounded-xl font-bold">↓</button>
-                        <button onclick="changeGrade(${emp.id}, 'up')" class="w-10 h-10 flex items-center justify-center bg-emerald-100 text-emerald-600 rounded-xl font-bold">↑</button>
-                        <button onclick="fireEmployee(${emp.id})" class="ml-4 bg-red-500 text-white px-6 py-2.5 rounded-xl font-bold text-xs uppercase">Fire</button>
-                    </div>
-                `;
-                listContainer.appendChild(item);
-            });
-        }
-
-        document.getElementById('hireForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const nameInput = document.getElementById('hireName');
-            const passInput = document.getElementById('hirePass');
-            const gradeInput = document.getElementById('hireGrade');
-            let employees = Storage.getEmployees();
-            
-            const newEmployee = {
-                id: Date.now(),
-                name: nameInput.value.trim(),
-                password: passInput.value.trim(), // MENYIMPAN PASSWORD
-                rank: gradeInput.value,
-                currentHours: 0,
-                maxHours: GLOBAL_SETTINGS.DEFAULT_MAX_HOURS, 
-                salary: 0
-            };
-
-            employees.push(newEmployee);
-            Storage.saveEmployees(employees);
-            alert(`Karyawan ${newEmployee.name} berhasil didaftarkan!`);
-            e.target.reset();
-            renderManageList();
-        });
-
-        window.changeGrade = (id, direction) => {
-            let employees = Storage.getEmployees();
-            const idx = employees.findIndex(e => e.id === id);
-            if (idx !== -1) {
-                let currentRankIndex = rankOrder.indexOf(employees[idx].rank);
-                if (direction === 'up' && currentRankIndex < rankOrder.length - 1) employees[idx].rank = rankOrder[currentRankIndex + 1];
-                else if (direction === 'down' && currentRankIndex > 0) employees[idx].rank = rankOrder[currentRankIndex - 1];
-                Storage.saveEmployees(employees);
-                renderManageList();
-            }
-        };
-
-        window.fireEmployee = (id) => {
-            if(confirm("Hapus karyawan?")) {
-                let employees = Storage.getEmployees().filter(emp => emp.id !== id);
-                Storage.saveEmployees(employees);
-                renderManageList();
-            }
-        };
-
-        const toggle = document.getElementById('darkModeToggle');
-        if(localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
-        toggle.addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-        });
-
-        renderManageList();
-    </script>
-</body>
-</html>
+        <section class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border border-white dark:border-slate-700 rounded-[35px] p-8 shadow-sm">
+            <h2 class="text-[#2D5BFF] dark:text-blue-400 font-extrabold text-xl mb-8 border-b-2 border-blue-100 dark:border-slate-700 pb-2 inline-block uppercase">Employee Management</h2>
+            <div id="manage-list" class="space-y-4">
+                <p class="text-center text-blue-400 animate-pulse font
