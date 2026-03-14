@@ -57,4 +57,79 @@
         <section class="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border border-white dark:border-slate-700 rounded-[35px] p-8 shadow-sm">
             <h2 class="text-[#2D5BFF] dark:text-blue-400 font-extrabold text-xl mb-8 border-b-2 border-blue-100 dark:border-slate-700 pb-2 inline-block uppercase">Employee Management</h2>
             <div id="manage-list" class="space-y-4">
-                <p class="text-center text-blue-400 animate-pulse font
+                <p class="text-center text-blue-400 animate-pulse font-bold uppercase">Loading Data...</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="config.js"></script>
+    <script type="module">
+        import { Storage } from './data/storage.js';
+
+        // DARK MODE LOGIC (Fixed)
+        const toggle = document.getElementById('darkModeToggle');
+        if(localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark');
+        
+        toggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        });
+
+        // HIRE EMPLOYEE LOGIC
+        const hireForm = document.getElementById('hireForm');
+        hireForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('hireName').value;
+            const pass = document.getElementById('hirePass').value;
+            const grade = document.getElementById('hireGrade').value;
+
+            try {
+                const employees = await Storage.getEmployees();
+                employees.push({
+                    id: Date.now(),
+                    name: name,
+                    rank: grade,
+                    password: pass,
+                    currentHours: 0
+                });
+                await Storage.saveEmployees(employees);
+                alert("EMPLOYEE ADDED SUCCESSFULLY!");
+                hireForm.reset();
+                window.location.reload();
+            } catch (err) {
+                alert("ERROR: " + err.message);
+            }
+        };
+
+        // RENDER MANAGEMENT LIST (Optional but helpful)
+        async function loadManagement() {
+            const list = document.getElementById('manage-list');
+            const emps = await Storage.getEmployees();
+            if(emps.length === 0) {
+                list.innerHTML = `<p class="text-center text-slate-400 font-bold uppercase">No Employee Found</p>`;
+                return;
+            }
+            list.innerHTML = emps.map(emp => `
+                <div class="flex justify-between items-center bg-white dark:bg-slate-700 p-4 rounded-2xl border border-blue-50 dark:border-slate-600 shadow-sm">
+                    <div>
+                        <p class="font-black text-[#2D5BFF] dark:text-blue-400">${emp.name}</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase">${emp.rank}</p>
+                    </div>
+                    <button onclick="deleteEmp(${emp.id})" class="text-red-400 hover:text-red-600 font-bold text-xs">REMOVE</button>
+                </div>
+            `).join('');
+        }
+
+        window.deleteEmp = async (id) => {
+            if(confirm("Delete this employee?")) {
+                const emps = await Storage.getEmployees();
+                const filtered = emps.filter(e => e.id != id);
+                await Storage.saveEmployees(filtered);
+                window.location.reload();
+            }
+        }
+
+        loadManagement();
+    </script>
+</body>
+</html>
