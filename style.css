@@ -1,27 +1,24 @@
 /* --- BASE UTILS & LIGHT MODE CARDS --- */
 #employee-container > div {
-    /* Base Card Style (akan dioverride tailwind class, tapi ini untuk safety) */
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Efek saat Duty Active di Light Mode */
 .duty-active {
-    border-color: #1E2A78 !important; /* Warna Navy saat aktif */
-    box-shadow: 0 15px 30px -10px rgba(30, 42, 120, 0.2) !important;
+    border-color: #2D5BFF !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 20px 40px -10px rgba(45, 91, 255, 0.25) !important;
+    transform: translateY(-5px);
 }
 
-.progress-glow {
-    box-shadow: 0 0 12px rgba(45, 91, 255, 0.4);
-}
-
-/* --- ANIMASI TOMBOL MEMBESAR (SCALE) --- */
+/* Animasi Tombol */
 .btn-animate {
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, filter 0.3s ease !important;
 }
 
 .btn-animate:hover {
-    transform: scale(1.1) !important;
+    transform: scale(1.05) !important;
     filter: brightness(1.1);
-    box-shadow: 0 8px 15px rgba(45, 91, 255, 0.2) !important;
     cursor: pointer;
 }
 
@@ -29,77 +26,72 @@
     transform: scale(0.95) !important;
 }
 
+/* --- DARK MODE SYSTEM --- */
 
-/* --- DARK MODE SYSTEM (FULL ADJUSTMENT) --- */
-
-/* 1. Body Background */
 html.dark body {
     background-color: #0F172A !important;
-    background-image: radial-gradient(circle at top right, #1E2A78, #0F172A);
+    background-image: radial-gradient(circle at top right, #1E293B, #0F172A) !important;
+    color: #F8FAFC;
 }
 
-/* 2. Header & Sections (Kecuali Player Cards) */
+/* Header & Stats di Dark Mode */
 html.dark header, 
+html.dark .bg-white\/60,
 html.dark section {
-    background-color: rgba(30, 41, 59, 0.7) !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
-    box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.5) !important; 
-    color: white !important;
+    background-color: #1E293B !important;
+    border-color: #334155 !important;
+    color: #F8FAFC !important;
 }
 
-/* 3. --- FIX: PLAYER CARDS DI DARK MODE --- */
-/* Kita targetkan div di dalam #employee-container */
+/* FIX: Player Cards di Dark Mode (Default) */
 html.dark #employee-container > div {
-    background-color: rgba(30, 41, 59, 0.5) !important; /* Sedikit lebih transparan */
-    
-    /* Warna Border yang Disesuaikan (Light Blue/Gray Blue) */
-    border-color: rgba(100, 116, 139, 0.4) !important; 
-    
-    /* Shadow yang Lebih Seamless */
-    box-shadow: 0 10px 20px -12px rgba(0, 0, 0, 0.4) !important;
+    background-color: #1E293B !important;
+    border-color: #334155 !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* 4. Fix: Player Card AKTIF (Duty On) di Dark Mode */
+/* FIX: Player Card AKTIF (Duty On) di Dark Mode */
 html.dark #employee-container > div.duty-active {
-    border-color: #60A5FA !important; /* Pakai Light Blue agar pop out */
-    background-color: rgba(30, 41, 59, 0.8) !important; /* Sedikit lebih pekat */
-    box-shadow: 0 15px 30px -10px rgba(96, 165, 250, 0.15) !important; /* Glow Biru Muda */
+    border-color: #3B82F6 !important; /* Biru terang agar kontras */
+    background-color: #1E293B !important;
+    box-shadow: 0 0 25px rgba(59, 130, 246, 0.2) !important; /* Efek Glow Biru */
 }
 
-/* 5. Stats Bar (Di Dashboard) */
-html.dark .bg-white\/60 {
-    background-color: rgba(30, 41, 59, 0.4) !important;
-    border-color: rgba(100, 116, 139, 0.2) !important;
+/* Typography di Dark Mode */
+html.dark h1, html.dark h2, html.dark h3 {
+    color: #60A5FA !important;
 }
 
-/* 6. Typography & Icons */
-html.dark h1, html.dark h2, html.dark label {
-    color: #60A5FA !important; /* Light Blue */
-}
-
-html.dark p, html.dark .text-\[\#1E2A78\]:not(.font-\[800\]) {
-    color: #94A3B8 !important; /* Gray Blue */
-}
-
-html.dark span:not(.text-white):not(.text-2xl) {
+html.dark p, html.dark span {
     color: #94A3B8 !important;
 }
 
-/* 7. Inputs & Selects */
-html.dark input, html.dark select {
-    background-color: rgba(15, 23, 42, 0.4) !important;
-    color: white !important;
-    border-color: rgba(255, 255, 255, 0.1) !important;
-    box-shadow: none !important;
+/* Memastikan angka stats tetap putih di dark mode */
+html.dark span[id^="count-"] {
+    color: #FFFFFF !important;
 }
 
-/* 8. Tombol Biru di Dark Mode (Shadow dihaluskan) */
-html.dark .bg-\[\#2D5BFF\] {
-    box-shadow: 0 10px 20px -5px rgba(45, 91, 255, 0.2) !important;
+/* Input & Search di Dark Mode */
+html.dark input {
+    background-color: #0F172A !important;
+    border-color: #334155 !important;
+    color: #FFFFFF !important;
 }
 
+html.dark input::placeholder {
+    color: rgba(96, 165, 250, 0.4) !important;
+}
 
-/* --- CUSTOM SCROLLBAR --- */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #2D5BFF; border-radius: 10px; }
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0F172A; }
+::-webkit-scrollbar-thumb { 
+    background: #2D5BFF; 
+    border-radius: 10px;
+    border: 2px solid #0F172A; 
+}
+
+/* Animasi Progress Bar */
+#employee-container .h-full {
+    transition: width 1s ease-in-out;
+}
